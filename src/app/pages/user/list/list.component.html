@@ -1,1 +1,29 @@
-<p>list works!</p>
+<nz-table
+  nzShowSizeChanger
+  [nzData]="list"
+  [nzFrontPagination]="false"
+  [nzLoading]="loading"
+  [nzTotal]="total"
+  [nzPageSize]="pageSize"
+  [nzPageIndex]="pageIndex"
+  (nzQueryParams)="onQueryParamsChange($event)"
+>
+  <thead>
+    <tr>
+      <th nzColumnKey="name">姓名</th>
+      <th nzColumnKey="gender">性别</th>
+      <th nzColumnKey="email">邮箱</th>
+      <th nzColumnKey="email">操作</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of list">
+      <td>{{ item.name }}</td>
+      <td>{{ item.gender }}</td>
+      <td>{{ item.email }}</td>
+      <td>
+        <a routerLink="log/{{ item.id }}">日志</a>
+      </td>
+    </tr>
+  </tbody>
+</nz-table>
