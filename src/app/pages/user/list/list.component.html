@@ -1,3 +1,7 @@
+<div style="margin-bottom: 24px">
+  <button nz-button nzType="primary" (click)="onClickEdit({})">新增</button>
+</div>
+
 <nz-table
   nzShowSizeChanger
   [nzData]="list"
@@ -10,10 +14,10 @@
 >
   <thead>
     <tr>
-      <th nzColumnKey="name">姓名</th>
-      <th nzColumnKey="gender">性别</th>
-      <th nzColumnKey="email">邮箱</th>
-      <th nzColumnKey="email">操作</th>
+      <th>姓名</th>
+      <th>性别</th>
+      <th>邮箱</th>
+      <th>操作</th>
     </tr>
   </thead>
   <tbody>
@@ -22,8 +26,18 @@
       <td>{{ item.gender }}</td>
       <td>{{ item.email }}</td>
       <td>
-        <a routerLink="log/{{ item.id }}">日志</a>
+        <div class="operate">
+          <a (click)="onClickEdit(item)">修改</a>
+          <a routerLink="log/{{ item.id }}">日志</a>
+        </div>
       </td>
     </tr>
   </tbody>
 </nz-table>
+
+<app-user-edit-modal
+  [visible]="editModalVisible"
+  [detail]="editDetail"
+  (onCancelEvent)="onCancelEdit()"
+  (onOkEvent)="onOkEdit()"
+></app-user-edit-modal>

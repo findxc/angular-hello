@@ -1,0 +1,7 @@
+.operate > * {
+  margin-right: 12px;
+}
+
+.operate > *:last-child {
+  margin-right: 0;
+}
