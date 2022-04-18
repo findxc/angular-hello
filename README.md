@@ -1,27 +1,51 @@
 # AngularHello
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.3.3.
+## 初始化项目
 
-## Development server
+执行 `ng new angular-hello` 来新建一个项目。如果没有 `ng` ，就先 `npm install -g @angular/cli` 。
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+![init](./init.png)
 
-## Code scaffolding
+## 引入 ng-zorro-antd
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+执行 `ng add ng-zorro-antd` 。
 
-## Build
+![antd](./antd.png)
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+## 新建用户管理模块
 
-## Running unit tests
+简单点，用户管理模块包含一个用户列表页面和一个查看用户操作日志页面即可。
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+```sh
+# 先创建带路由的模块
+ng generate module pages/user --routing
+# 再创建两个页面的组件
+ng generate component pages/user/list
+ng generate component pages/user/log
+```
 
-## Running end-to-end tests
+然后要在 `src/app/pages/user/user-routing.module.ts` 中修改下 routes ，把两个页面加进去。
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+```js
+import { ListComponent } from "./list/list.component";
+import { LogComponent } from "./log/log.component";
 
-## Further help
+const routes: Routes = [
+  { path: "", component: ListComponent },
+  { path: "log/:id", component: LogComponent },
+];
+```
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+最后还需要在 `src/app/app-routing.module.ts` 中的 routes 中加入用户模块。
+
+```js
+{
+  path: 'user',
+  loadChildren: () =>
+      import('./pages/user/user.module').then((m) => m.UserModule),
+},
+```
+
+这时候浏览器访问 `/user` 和 `/user/log/1` 页面上就显示的是对应的内容了。最后的最后，我们在左侧菜单栏加一下用户管理模块入口就好了，编辑 `src/app/app.component.html` 即可。
+
+其余功能点见 commit 信息。
