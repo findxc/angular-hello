@@ -57,7 +57,7 @@ export class ListComponent {
     this.editModalVisible = false;
   }
 
-  onOkEdit() {
+  onSuccessEdit() {
     this.editModalVisible = false;
     this.fetchList(this.editDetail.id ? this.pageIndex : 1, this.pageSize);
   }

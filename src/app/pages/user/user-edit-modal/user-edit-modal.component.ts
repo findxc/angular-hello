@@ -22,12 +22,8 @@ export class UserEditModalComponent implements OnInit, OnChanges {
 
   @Input() visible = false;
   @Input() detail: User = {};
-  @Output() onCancelEvent = new EventEmitter();
-  @Output() onOkEvent = new EventEmitter();
-
-  onCancel() {
-    this.onCancelEvent.emit();
-  }
+  @Output() onCancel = new EventEmitter();
+  @Output() onSuccess = new EventEmitter();
 
   onOk() {
     if (!this.form.valid) {
@@ -42,7 +38,7 @@ export class UserEditModalComponent implements OnInit, OnChanges {
 
     // TODO 发请求
     console.log('submit', this.form.value);
-    this.onOkEvent.emit();
+    this.onSuccess.emit();
   }
 
   ngOnInit(): void {
