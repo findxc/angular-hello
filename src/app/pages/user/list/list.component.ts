@@ -49,8 +49,7 @@ export class ListComponent {
   }
 
   onClickEdit(detail: User) {
-    // 注意，这里一定要 ... 一下，否则弹窗中表单项如果有校验失败的，就出现奇怪 bug 了，还不清楚具体咋回事
-    this.editDetail = { ...detail };
+    this.editDetail = detail;
     this.editModalVisible = true;
   }
 
