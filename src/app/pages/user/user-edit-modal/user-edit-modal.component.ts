@@ -3,7 +3,6 @@ import {
   Input,
   Output,
   EventEmitter,
-  SimpleChanges,
   OnInit,
   OnChanges,
 } from '@angular/core';
@@ -54,14 +53,12 @@ export class UserEditModalComponent implements OnInit, OnChanges {
     });
   }
 
-  ngOnChanges(changes: SimpleChanges) {
-    const visible = changes['visible'].currentValue;
-    if (visible) {
-      const detail = changes['detail'].currentValue;
+  ngOnChanges() {
+    if (this.visible) {
       this.form.reset({
-        name: detail.name ?? null,
-        gender: detail.gender ?? null,
-        email: detail.email ?? null,
+        name: this.detail.name ?? null,
+        gender: this.detail.gender ?? null,
+        email: this.detail.email ?? null,
       });
     }
   }
