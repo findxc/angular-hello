@@ -1,7 +1,7 @@
 <nz-modal
   nzTitle="{{ detail.id ? '修改' : '新增' }}用户"
   [nzVisible]="visible"
-  (nzOnCancel)="onCancel()"
+  (nzOnCancel)="onCancel.emit()"
   (nzOnOk)="onOk()"
 >
   <form *nzModalContent nz-form [formGroup]="form">
