@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { NzTableQueryParams } from 'ng-zorro-antd/table';
+import { HttpClient } from '@angular/common/http';
 
 export interface User {
-  id?: string;
+  id?: number;
   name?: string;
   gender?: string;
   email?: string;
@@ -23,6 +24,8 @@ export class ListComponent {
   editModalVisible = false;
   editDetail: User = {};
 
+  constructor(private http: HttpClient) {}
+
   onQueryParamsChange(params: NzTableQueryParams): void {
     const { pageSize, pageIndex } = params;
     this.fetchList(pageIndex, pageSize);
@@ -33,19 +36,11 @@ export class ListComponent {
     this.pageIndex = pageIndex;
     this.pageSize = pageSize;
 
-    setTimeout(() => {
-      this.list = new Array(10).fill('').map((_, index) => {
-        const id = String(index + 1 + pageSize * (pageIndex - 1));
-        return {
-          id,
-          name: `name${id}`,
-          gender: `gender${id}`,
-          email: `email${id}`,
-        };
-      });
-      this.total = 25;
+    this.http.get('api/user').subscribe((res: any) => {
+      this.list = res.data;
+      this.total = res.total;
       this.loading = false;
-    }, 500);
+    });
   }
 
   onClickEdit(detail: User) {

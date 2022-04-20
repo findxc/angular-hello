@@ -4,9 +4,11 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
+    "start:mock": "API_ENV=mock ng serve & npm run mock",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "mock": "mocker ./mock/index.js"
   },
   "private": true,
   "dependencies": {
@@ -35,6 +37,8 @@
     "karma-coverage": "~2.1.0",
     "karma-jasmine": "~4.0.0",
     "karma-jasmine-html-reporter": "~1.7.0",
+    "mocker-api": "^2.9.5",
+    "mockjs": "^1.1.0",
     "typescript": "~4.6.2"
   }
 }
