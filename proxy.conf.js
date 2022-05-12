@@ -3,7 +3,7 @@ module.exports =
   process.env.API_ENV === "mock"
     ? {
         "/api": {
-          target: "http://localhost:3721",
+          target: "http://localhost:5050",
           secure: false,
           pathRewrite: { "^/api": "" },
         },
