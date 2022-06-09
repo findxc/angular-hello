@@ -15,6 +15,7 @@ import { IconsProviderModule } from './icons-provider.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LayoutComponent } from './core/components/layout/layout.component';
+import { httpInterceptorProviders } from './core/interceptor/index';
 
 registerLocaleData(en);
 
@@ -30,7 +31,7 @@ registerLocaleData(en);
     NzLayoutModule,
     NzMenuModule,
   ],
-  providers: [{ provide: NZ_I18N, useValue: en_US }],
+  providers: [{ provide: NZ_I18N, useValue: en_US }, httpInterceptorProviders],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
