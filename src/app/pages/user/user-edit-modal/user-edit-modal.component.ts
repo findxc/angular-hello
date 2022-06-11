@@ -5,10 +5,10 @@ import {
   EventEmitter,
   OnInit,
   OnChanges,
-} from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+} from '@angular/core'
+import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 
-import { User } from '../list/list.component';
+import { User } from '../list/list.component'
 
 @Component({
   selector: 'app-user-edit-modal',
@@ -18,27 +18,27 @@ import { User } from '../list/list.component';
 export class UserEditModalComponent implements OnInit, OnChanges {
   constructor(private fb: FormBuilder) {}
 
-  form!: FormGroup;
+  form!: FormGroup
 
-  @Input() visible = false;
-  @Input() detail: User = {};
-  @Output() onCancel = new EventEmitter();
-  @Output() onSuccess = new EventEmitter();
+  @Input() visible = false
+  @Input() detail: User = {}
+  @Output() onCancel = new EventEmitter()
+  @Output() onSuccess = new EventEmitter()
 
   onOk() {
     if (!this.form.valid) {
-      Object.values(this.form.controls).forEach((control) => {
+      Object.values(this.form.controls).forEach(control => {
         if (control.invalid) {
-          control.markAsDirty();
-          control.updateValueAndValidity({ onlySelf: true });
+          control.markAsDirty()
+          control.updateValueAndValidity({ onlySelf: true })
         }
-      });
-      return;
+      })
+      return
     }
 
     // TODO 发请求
-    console.log('submit', this.form.value);
-    this.onSuccess.emit();
+    console.log('submit', this.form.value)
+    this.onSuccess.emit()
   }
 
   ngOnInit(): void {
@@ -46,7 +46,7 @@ export class UserEditModalComponent implements OnInit, OnChanges {
       name: [null, [Validators.required]],
       gender: [null, [Validators.required]],
       email: [null, [Validators.required]],
-    });
+    })
   }
 
   ngOnChanges() {
@@ -55,7 +55,7 @@ export class UserEditModalComponent implements OnInit, OnChanges {
         name: this.detail.name ?? null,
         gender: this.detail.gender ?? null,
         email: this.detail.email ?? null,
-      });
+      })
     }
   }
 }

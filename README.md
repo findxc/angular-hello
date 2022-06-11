@@ -27,13 +27,13 @@ ng generate component pages/user/log
 然后要在 `src/app/pages/user/user-routing.module.ts` 中修改下 routes ，把两个页面加进去。
 
 ```js
-import { ListComponent } from "./list/list.component";
-import { LogComponent } from "./log/log.component";
+import { ListComponent } from './list/list.component'
+import { LogComponent } from './log/log.component'
 
 const routes: Routes = [
-  { path: "", component: ListComponent },
-  { path: "log/:id", component: LogComponent },
-];
+  { path: '', component: ListComponent },
+  { path: 'log/:id', component: LogComponent },
+]
 ```
 
 最后还需要在 `src/app/app-routing.module.ts` 中的 routes 中加入用户模块。

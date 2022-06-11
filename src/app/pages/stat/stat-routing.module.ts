@@ -1,10 +1,10 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { NgModule } from '@angular/core'
+import { RouterModule, Routes } from '@angular/router'
 
-import { LayoutComponent } from './layout/layout.component';
-import { AComponent } from './a/a.component';
-import { BComponent } from './b/b.component';
-import { CComponent } from './c/c.component';
+import { LayoutComponent } from './layout/layout.component'
+import { AComponent } from './a/a.component'
+import { BComponent } from './b/b.component'
+import { CComponent } from './c/c.component'
 
 const routes: Routes = [
   {
@@ -16,7 +16,7 @@ const routes: Routes = [
       { path: 'c', component: CComponent },
     ],
   },
-];
+]
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

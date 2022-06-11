@@ -1,25 +1,24 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { UserEditModalComponent } from './user-edit-modal.component';
+import { UserEditModalComponent } from './user-edit-modal.component'
 
 describe('UserEditModalComponent', () => {
-  let component: UserEditModalComponent;
-  let fixture: ComponentFixture<UserEditModalComponent>;
+  let component: UserEditModalComponent
+  let fixture: ComponentFixture<UserEditModalComponent>
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ UserEditModalComponent ]
-    })
-    .compileComponents();
-  });
+      declarations: [UserEditModalComponent],
+    }).compileComponents()
+  })
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(UserEditModalComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    fixture = TestBed.createComponent(UserEditModalComponent)
+    component = fixture.componentInstance
+    fixture.detectChanges()
+  })
 
   it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+    expect(component).toBeTruthy()
+  })
+})
