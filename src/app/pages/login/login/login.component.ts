@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component } from '@angular/core'
+import { Router } from '@angular/router'
 
 @Component({
   selector: 'app-login',
@@ -10,6 +10,6 @@ export class LoginComponent {
   constructor(private router: Router) {}
 
   onClickLogin() {
-    this.router.navigate(['']);
+    this.router.navigate([''])
   }
 }
