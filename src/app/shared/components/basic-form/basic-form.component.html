@@ -5,7 +5,13 @@
         [nzSpan]="labelSpan"
         [nzRequired]="item.validators?.includes(requiredValidator)"
       >
-        {{ item.label }}
+        <ng-container *ngIf="item.label">
+          {{ item.label }}
+        </ng-container>
+        <ng-template
+          *ngIf="item.labelTemplate"
+          [ngTemplateOutlet]="item.labelTemplate"
+        ></ng-template>
       </nz-form-label>
       <nz-form-control
         [nzSpan]="controlSpan"

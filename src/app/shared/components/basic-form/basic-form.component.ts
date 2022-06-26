@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core'
+import { Component, Input, OnInit, TemplateRef } from '@angular/core'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { NzSelectOptionInterface } from 'ng-zorro-antd/select'
 
@@ -18,7 +18,8 @@ const validateMessageMap: { [key: string]: string } = {
 
 export interface FormItem {
   key: string
-  label: string
+  label?: string
+  labelTemplate?: TemplateRef<any>
   type: string
   validators?: Validators[]
   options?: NzSelectOptionInterface[]
