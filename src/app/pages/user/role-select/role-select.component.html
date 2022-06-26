@@ -1,0 +1,8 @@
+<nz-select
+  nzAllowClear
+  [nzOptions]="options"
+  [nzDisabled]="disabled"
+  [ngModel]="value"
+  (ngModelChange)="onChange($event)"
+  (nzBlur)="onBlur()"
+></nz-select>

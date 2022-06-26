@@ -1,61 +1,125 @@
+import { HttpClient } from '@angular/common/http'
 import {
   Component,
   Input,
   Output,
   EventEmitter,
-  OnInit,
+  ViewChild,
   OnChanges,
 } from '@angular/core'
-import { FormBuilder, FormGroup, Validators } from '@angular/forms'
+import { Validators, AbstractControl, ValidationErrors } from '@angular/forms'
+import {
+  BasicFormComponent,
+  FormItem,
+} from '@shared/components/basic-form/basic-form.component'
 
 import { User } from '../list/list.component'
+
+function roleValidator(control: AbstractControl): ValidationErrors | null {
+  if (control?.value === 'admin') {
+    return { noAdmin: 'cannot select admin' }
+  }
+  return null
+}
 
 @Component({
   selector: 'app-user-edit-modal',
   templateUrl: './user-edit-modal.component.html',
   styleUrls: ['./user-edit-modal.component.css'],
 })
-export class UserEditModalComponent implements OnInit, OnChanges {
-  constructor(private fb: FormBuilder) {}
-
-  form!: FormGroup
-
+export class UserEditModalComponent implements OnChanges {
   @Input() visible = false
   @Input() detail: User = {}
   @Output() onCancel = new EventEmitter()
   @Output() onSuccess = new EventEmitter()
 
-  onOk() {
-    if (!this.form.valid) {
-      Object.values(this.form.controls).forEach(control => {
-        if (control.invalid) {
-          control.markAsDirty()
-          control.updateValueAndValidity({ onlySelf: true })
-        }
-      })
-      return
-    }
+  @ViewChild(BasicFormComponent)
+  private basicFormComponent!: BasicFormComponent
 
-    // TODO 发请求
-    console.log('submit', this.form.value)
-    this.onSuccess.emit()
+  get form() {
+    return this.basicFormComponent.form
   }
 
-  ngOnInit(): void {
-    this.form = this.fb.group({
-      name: [null, [Validators.required]],
-      gender: [null, [Validators.required]],
-      email: [null, [Validators.required]],
-    })
-  }
+  okLoading = false
+
+  constructor(private http: HttpClient) {}
+
+  formItems: FormItem[] = [
+    {
+      key: 'name',
+      label: 'Name',
+      type: 'input',
+      validators: [Validators.required],
+    },
+    {
+      key: 'gender',
+      label: 'Gender',
+      type: 'select',
+      options: [
+        { label: 'male', value: 'male' },
+        { label: 'female', value: 'female' },
+      ],
+    },
+    {
+      key: 'email',
+      label: 'Email',
+      type: 'input',
+      validators: [
+        Validators.required,
+        Validators.email,
+        Validators.maxLength(10),
+      ],
+    },
+    {
+      key: 'role',
+      label: 'Role',
+      type: 'custom',
+      validators: [Validators.required, roleValidator],
+    },
+    {
+      key: 'forMale',
+      label: 'ForMale',
+      type: 'input',
+      validators: [Validators.required],
+    },
+  ]
 
   ngOnChanges() {
     if (this.visible) {
-      this.form.reset({
-        name: this.detail.name ?? null,
-        gender: this.detail.gender ?? null,
-        email: this.detail.email ?? null,
-      })
+      setTimeout(() => {
+        this.form.valueChanges.subscribe(value => {
+          const hiddenForMale = value?.gender !== 'male'
+          const forMale = this.formItems.find(x => x.key === 'forMale')
+          if (forMale?.hidden !== hiddenForMale) {
+            // @ts-ignore
+            forMale.hidden = hiddenForMale
+          }
+        })
+        this.form.reset({ ...this.detail })
+      }, 0)
     }
+  }
+
+  onOk() {
+    const { values, errors } = this.basicFormComponent.validateFields()
+    console.log({ values, errors })
+
+    if (errors) {
+      return
+    }
+
+    this.okLoading = true
+    const request = this.detail.id
+      ? this.http.put(`api/user/${this.detail.id}`, values)
+      : this.http.post('api/user', values)
+    request.subscribe({
+      next: () => {
+        this.onSuccess.emit()
+        this.okLoading = false
+      },
+      error: () => {
+        this.okLoading = false
+      },
+    })
   }
 }

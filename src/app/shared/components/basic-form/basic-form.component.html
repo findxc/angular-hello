@@ -1,1 +1,33 @@
-<p>basic-form works!</p>
+<form nz-form [formGroup]="form">
+  <ng-container *ngFor="let item of items">
+    <nz-form-item *ngIf="!item.hidden">
+      <nz-form-label
+        [nzSpan]="labelSpan"
+        [nzRequired]="item.validators?.includes(requiredValidator)"
+      >
+        {{ item.label }}
+      </nz-form-label>
+      <nz-form-control
+        [nzSpan]="controlSpan"
+        [nzErrorTip]="parseErrorTip(item.key)"
+        [ngSwitch]="item.type"
+        [nzValidateStatus]="form.controls[item.key]"
+      >
+        <ng-content
+          *ngSwitchCase="'custom'"
+          [select]="'[key=' + item.key + ']'"
+        ></ng-content>
+
+        <nz-select
+          *ngSwitchCase="'select'"
+          [formControlName]="item.key"
+          [nzOptions]="item.options || []"
+          nzAllowClear
+        >
+        </nz-select>
+
+        <input *ngSwitchCase="'input'" nz-input [formControlName]="item.key" />
+      </nz-form-control>
+    </nz-form-item>
+  </ng-container>
+</form>

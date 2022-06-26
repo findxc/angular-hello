@@ -8,6 +8,7 @@ import { NzButtonModule } from 'ng-zorro-antd/button'
 import { NzFormModule } from 'ng-zorro-antd/form'
 import { NzInputModule } from 'ng-zorro-antd/input'
 import { NzModalModule } from 'ng-zorro-antd/modal'
+import { NzSelectModule } from 'ng-zorro-antd/select'
 import { NzTableModule } from 'ng-zorro-antd/table'
 
 import { BasicFormComponent } from './components/basic-form/basic-form.component'
@@ -21,6 +22,7 @@ import { BasicFormComponent } from './components/basic-form/basic-form.component
     NzFormModule,
     NzInputModule,
     NzModalModule,
+    NzSelectModule,
     NzTableModule,
   ],
   declarations: [BasicFormComponent],
@@ -33,6 +35,7 @@ import { BasicFormComponent } from './components/basic-form/basic-form.component
     NzFormModule,
     NzInputModule,
     NzModalModule,
+    NzSelectModule,
     NzTableModule,
     BasicFormComponent,
   ],
