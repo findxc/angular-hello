@@ -5,7 +5,9 @@ import {
   Output,
   EventEmitter,
   ViewChild,
+  TemplateRef,
   OnChanges,
+  AfterViewInit,
 } from '@angular/core'
 import { Validators, AbstractControl, ValidationErrors } from '@angular/forms'
 import {
@@ -27,14 +29,17 @@ function roleValidator(control: AbstractControl): ValidationErrors | null {
   templateUrl: './user-edit-modal.component.html',
   styleUrls: ['./user-edit-modal.component.css'],
 })
-export class UserEditModalComponent implements OnChanges {
+export class UserEditModalComponent implements OnChanges, AfterViewInit {
   @Input() visible = false
   @Input() detail: User = {}
   @Output() onCancel = new EventEmitter()
   @Output() onSuccess = new EventEmitter()
 
   @ViewChild(BasicFormComponent)
-  private basicFormComponent!: BasicFormComponent
+  basicFormComponent!: BasicFormComponent
+
+  @ViewChild('nameLabel')
+  nameLabel!: TemplateRef<any>
 
   get form() {
     return this.basicFormComponent.form
@@ -44,45 +49,50 @@ export class UserEditModalComponent implements OnChanges {
 
   constructor(private http: HttpClient) {}
 
-  formItems: FormItem[] = [
-    {
-      key: 'name',
-      label: 'Name',
-      type: 'input',
-      validators: [Validators.required],
-    },
-    {
-      key: 'gender',
-      label: 'Gender',
-      type: 'select',
-      options: [
-        { label: 'male', value: 'male' },
-        { label: 'female', value: 'female' },
-      ],
-    },
-    {
-      key: 'email',
-      label: 'Email',
-      type: 'input',
-      validators: [
-        Validators.required,
-        Validators.email,
-        Validators.maxLength(10),
-      ],
-    },
-    {
-      key: 'role',
-      label: 'Role',
-      type: 'custom',
-      validators: [Validators.required, roleValidator],
-    },
-    {
-      key: 'forMale',
-      label: 'ForMale',
-      type: 'input',
-      validators: [Validators.required],
-    },
-  ]
+  formItems: FormItem[] = []
+
+  ngAfterViewInit() {
+    // must set formItems after view init, otherwise labelTemplate is undefined
+    this.formItems = [
+      {
+        key: 'name',
+        labelTemplate: this.nameLabel,
+        type: 'input',
+        validators: [Validators.required],
+      },
+      {
+        key: 'gender',
+        label: 'Gender',
+        type: 'select',
+        options: [
+          { label: 'male', value: 'male' },
+          { label: 'female', value: 'female' },
+        ],
+      },
+      {
+        key: 'email',
+        label: 'Email',
+        type: 'input',
+        validators: [
+          Validators.required,
+          Validators.email,
+          Validators.maxLength(10),
+        ],
+      },
+      {
+        key: 'role',
+        label: 'Role',
+        type: 'custom',
+        validators: [Validators.required, roleValidator],
+      },
+      {
+        key: 'forMale',
+        label: 'ForMale',
+        type: 'input',
+        validators: [Validators.required],
+      },
+    ]
+  }
 
   ngOnChanges() {
     if (this.visible) {
