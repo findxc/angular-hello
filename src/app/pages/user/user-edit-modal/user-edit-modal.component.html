@@ -1,27 +1,14 @@
 <nz-modal
   nzTitle="{{ detail.id ? '修改' : '新增' }}用户"
   [nzVisible]="visible"
+  [nzOkLoading]="okLoading"
   (nzOnCancel)="onCancel.emit()"
   (nzOnOk)="onOk()"
 >
-  <form *nzModalContent nz-form [formGroup]="form">
-    <nz-form-item>
-      <nz-form-label [nzSm]="6" nzRequired nzFor="name">姓名</nz-form-label>
-      <nz-form-control [nzSm]="14" nzErrorTip="姓名不能为空">
-        <input nz-input formControlName="name" id="name" />
-      </nz-form-control>
-    </nz-form-item>
-    <nz-form-item>
-      <nz-form-label [nzSm]="6" nzRequired nzFor="gender">性别</nz-form-label>
-      <nz-form-control [nzSm]="14" nzErrorTip="性别不能为空">
-        <input nz-input formControlName="gender" id="gender" />
-      </nz-form-control>
-    </nz-form-item>
-    <nz-form-item>
-      <nz-form-label [nzSm]="6" nzRequired nzFor="email">邮箱</nz-form-label>
-      <nz-form-control [nzSm]="14" nzErrorTip="邮箱不能为空">
-        <input nz-input formControlName="email" id="email" />
-      </nz-form-control>
-    </nz-form-item>
-  </form>
+  <app-basic-form *nzModalContent #basicForm [items]="formItems">
+    <!-- must add key="xxx" for ng-content to select, and must add formGroup because formControlName need be wrapped by formGroup -->
+    <ng-container key="role" [formGroup]="basicForm.form">
+      <app-role-select formControlName="role"></app-role-select>
+    </ng-container>
+  </app-basic-form>
 </nz-modal>
