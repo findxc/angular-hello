@@ -12,6 +12,8 @@ import { NzSelectModule } from 'ng-zorro-antd/select'
 import { NzTableModule } from 'ng-zorro-antd/table'
 
 import { BasicFormComponent } from './components/basic-form/basic-form.component'
+import { MyCardComponent } from './components/my-card/my-card.component'
+import { CardContentDirective } from './directives/card-content.directive'
 
 @NgModule({
   imports: [
@@ -25,7 +27,7 @@ import { BasicFormComponent } from './components/basic-form/basic-form.component
     NzSelectModule,
     NzTableModule,
   ],
-  declarations: [BasicFormComponent],
+  declarations: [BasicFormComponent, MyCardComponent, CardContentDirective],
   providers: [],
   exports: [
     CommonModule,
@@ -38,6 +40,7 @@ import { BasicFormComponent } from './components/basic-form/basic-form.component
     NzSelectModule,
     NzTableModule,
     BasicFormComponent,
+    MyCardComponent,
   ],
 })
 export class SharedModule {}
