@@ -4,21 +4,52 @@ import {
   OnInit,
   ContentChildren,
   QueryList,
+  TemplateRef,
+  ContentChild,
+  ElementRef,
+  ChangeDetectionStrategy,
+  ViewEncapsulation,
+  Directive,
 } from '@angular/core'
-import { CardContentDirective } from '../../directives/card-content.directive'
+
+@Directive({
+  selector: '[card-content]',
+})
+export class CardContentDirective {}
 
 @Component({
   selector: 'app-my-card',
-  templateUrl: './my-card.component.html',
+  // changeDetection: ChangeDetectionStrategy.OnPush,
+  // encapsulation: ViewEncapsulation.None,
+  template: `
+    <ng-template
+      ngFor
+      let-item
+      let-last="last"
+      let-index="index"
+      [ngForOf]="items"
+    >
+      <ng-container [ngTemplateOutlet]="item"></ng-container>
+    </ng-template>
+  `,
   styleUrls: ['./my-card.component.css'],
 })
-export class MyCardComponent implements OnInit {
+export class MyCardComponent {
   @Input() title!: string
 
-  @ContentChildren(CardContentDirective) contents!: CardContentDirective
+  // @ContentChildren('aaa', { read: TemplateRef })
+  // items!: QueryList<TemplateRef<any>>
 
-  ngAfterViewInit() {
-    console.log(this.contents)
+  // @ContentChildren(CardContentDirective, {descendants: true}) items!: QueryList<any>;
+
+  // @ContentChildren('aaa') items!: QueryList<any>
+  @ContentChildren(CardContentDirective, { read: TemplateRef })
+  items!: QueryList<TemplateRef<any>>
+
+  // @ContentChildren('aaa') items!: QueryList<TemplateRef<any>>;
+
+  ngAfterContentInit() {
+    console.log(this.items)
     // setTimeout(() => {
     //   this.myCard.setTitle('123')
     // }, 0);
@@ -27,8 +58,4 @@ export class MyCardComponent implements OnInit {
   setTitle(title: string) {
     this.title = title
   }
-
-  constructor() {}
-
-  ngOnInit(): void {}
 }
